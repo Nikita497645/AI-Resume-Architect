@@ -74,3 +74,72 @@ AI-Resume-Architect/
 ├── .gitignore
 ├── README.md
 └── docker-compose.yml
+```
+
+---
+
+## ⚙️ Local Setup
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone https://github.com/Nikita497645/AI-Resume-Architect.git
+cd AI-Resume-Architect
+```
+
+---
+
+### 2️⃣ Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs on:
+
+```bash
+http://localhost:5173
+```
+
+---
+
+### 3️⃣ Backend Setup
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+Backend runs on:
+
+```bash
+http://localhost:5000
+```
+
+---
+
+## 🎯 Project Goals
+
+- Build an AI-assisted resume generation platform
+- Improve ATS compatibility for resumes
+- Automate resume enhancement using LLMs
+- Deliver production-ready SaaS architecture
+- Integrate scalable AI workflows into MERN applications
+
+---
+
+## 📌 Current Status
+
+- ✅ MERN Base Setup Completed  
+- ✅ GitHub Collaboration Configured  
+- ✅ Frontend & Backend Initialized  
+- 🚧 Resume Builder Development In Progress
+
+---
+
+This project is being developed collaboratively as part of a Web-Development Internship.
+
+This project is developed for educational and project implementation purposes.
