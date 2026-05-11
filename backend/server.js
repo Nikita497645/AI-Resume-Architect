@@ -1,17 +1,24 @@
-const express = require("express");
-const cors = require("cors");
+const express = require('express')
+const cors = require('cors')
+require('dotenv').config()
 
-const app = express();
+const app = express()
 
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 
-app.get("/", (req, res) => {
-  res.send("CareerForge Pro Backend Running");
-});
+app.get('/', (req, res) => {
+  res.send('Backend Running Successfully')
+})
 
-const PORT = 5000;
+app.get('/api/test', (req, res) => {
+  res.json({
+    message: 'API Working Successfully'
+  })
+})
+
+const PORT = 5000
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  console.log(`Server running on port ${PORT}`)
+})
