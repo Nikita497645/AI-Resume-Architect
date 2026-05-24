@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function App() {
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,57 +11,25 @@ function App() {
     degree: "",
     cgpa: "",
     graduationYear: "",
+    company: "",
+    role: "",
+    duration: "",
+    experienceDescription: "",
     skills: "",
   });
 
-  const [errors, setErrors] = useState({});
-
   const handleChange = (e) => {
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+
   };
 
-  const validateForm = () => {
-    let newErrors = {};
+  const handleSubmit = async (e) => {
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (formData.phone.length < 10) {
-      newErrors.phone = "Phone number must be at least 10 digits";
-    }
-
-    if (!formData.college.trim()) {
-      newErrors.college = "College name is required";
-    }
-
-    if (!formData.degree.trim()) {
-      newErrors.degree = "Degree is required";
-    }
-
-    if (!formData.skills.trim()) {
-      newErrors.skills = "Skills are required";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async () => {
-
-  if (validateForm()) {
+    e.preventDefault();
 
     try {
 
@@ -69,175 +38,224 @@ function App() {
         formData
       );
 
-      alert(response.data.message);
+      if (response.data.success) {
 
-      console.log(response.data);
+        alert("Resume Saved Successfully!");
+
+        console.log(response.data);
+
+      }
 
     } catch (error) {
 
       console.log(error);
 
-      alert("Error saving resume!");
+      alert("Error saving resume");
 
     }
 
-  }
-
-};
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-8">
-      <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-2xl">
 
-        <h1 className="text-4xl font-bold text-center text-blue-600 mb-8">
-          Resume Form
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-300 flex justify-center items-center p-6">
 
-        <div className="space-y-5">
+      <div className="bg-white shadow-2xl rounded-3xl p-8 md:p-10 w-full max-w-4xl">
 
-          {/* Full Name */}
+        {/* Header */}
+
+        <div className="text-center mb-10">
+
+          <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
+            CareerForge Pro
+          </h1>
+
+          <p className="text-gray-500 mt-3 text-sm md:text-base">
+            AI-Powered ATS Resume Optimizer
+          </p>
+
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-8">
+
+          {/* Personal Information */}
+
           <div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
-            />
 
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.name}
-              </p>
-            )}
-          </div>
+            <h2 className="text-2xl font-semibold mb-5 border-b pb-2">
+              Personal Information
+            </h2>
 
-          {/* Email */}
-          <div>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email}
-              </p>
-            )}
-          </div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={handleChange}
+                className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
 
-          {/* Phone */}
-          <div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+
+            </div>
+
             <input
               type="text"
               name="phone"
               placeholder="Phone Number"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
+              className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 w-full mt-5"
+              required
             />
 
-            {errors.phone && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.phone}
-              </p>
-            )}
           </div>
 
-          {/* College */}
-          <div>
-            <input
-              type="text"
-              name="college"
-              placeholder="College Name"
-              value={formData.college}
-              onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
-            />
+          {/* Education */}
 
-            {errors.college && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.college}
-              </p>
-            )}
+          <div>
+
+            <h2 className="text-2xl font-semibold mb-5 border-b pb-2">
+              Education
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+              <input
+                type="text"
+                name="college"
+                placeholder="College / University"
+                value={formData.college}
+                onChange={handleChange}
+                className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              <input
+                type="text"
+                name="degree"
+                placeholder="Degree"
+                value={formData.degree}
+                onChange={handleChange}
+                className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              <input
+                type="text"
+                name="cgpa"
+                placeholder="CGPA"
+                value={formData.cgpa}
+                onChange={handleChange}
+                className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              <input
+                type="text"
+                name="graduationYear"
+                placeholder="Graduation Year"
+                value={formData.graduationYear}
+                onChange={handleChange}
+                className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+            </div>
+
           </div>
 
-          {/* Degree */}
+          {/* Experience */}
+
           <div>
+
+            <h2 className="text-2xl font-semibold mb-5 border-b pb-2">
+              Experience
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+              <input
+                type="text"
+                name="company"
+                placeholder="Company Name"
+                value={formData.company}
+                onChange={handleChange}
+                className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              <input
+                type="text"
+                name="role"
+                placeholder="Role / Position"
+                value={formData.role}
+                onChange={handleChange}
+                className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+            </div>
+
             <input
               type="text"
-              name="degree"
-              placeholder="Degree"
-              value={formData.degree}
+              name="duration"
+              placeholder="Duration (Ex: Jan 2024 - Present)"
+              value={formData.duration}
               onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
+              className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 w-full mt-5"
             />
 
-            {errors.degree && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.degree}
-              </p>
-            )}
-          </div>
-
-          {/* CGPA */}
-          <div>
-            <input
-              type="text"
-              name="cgpa"
-              placeholder="CGPA / Percentage"
-              value={formData.cgpa}
+            <textarea
+              name="experienceDescription"
+              placeholder="Describe your work experience..."
+              value={formData.experienceDescription}
               onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
+              className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 w-full mt-5 h-32"
             />
-          </div>
 
-          {/* Graduation Year */}
-          <div>
-            <input
-              type="text"
-              name="graduationYear"
-              placeholder="Graduation Year"
-              value={formData.graduationYear}
-              onChange={handleChange}
-              className="w-full border p-3 rounded-xl"
-            />
           </div>
 
           {/* Skills */}
+
           <div>
+
+            <h2 className="text-2xl font-semibold mb-5 border-b pb-2">
+              Skills
+            </h2>
+
             <textarea
               name="skills"
-              placeholder="Skills (React, Node.js, MongoDB...)"
+              placeholder="Enter your skills (React, Node.js, MongoDB, Python...)"
               value={formData.skills}
               onChange={handleChange}
-              className="w-full border p-3 rounded-xl h-24"
+              className="border border-gray-300 p-4 rounded-xl outline-none focus:ring-2 focus:ring-blue-500 w-full h-32"
             />
 
-            {errors.skills && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.skills}
-              </p>
-            )}
           </div>
 
           {/* Submit Button */}
+
           <button
-            onClick={handleSubmit}
-            className="bg-blue-600 text-white w-full py-3 rounded-xl hover:bg-blue-700"
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 transition-all duration-300 text-white font-semibold py-4 rounded-xl shadow-lg"
           >
             Save Resume
           </button>
 
-        </div>
+        </form>
+
       </div>
+
     </div>
+
   );
+
 }
 
 export default App;
