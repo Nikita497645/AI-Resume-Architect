@@ -14,9 +14,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+/* Root Route */
+
 app.get("/", (req, res) => {
-  res.send("CareerForge Pro Backend Running");
+
+  res.status(200).json({
+    success: true,
+    message: "CareerForge Pro Backend Running",
+  });
+
 });
+
+/* Save Resume API */
 
 app.post("/api/resume", async (req, res) => {
 
@@ -24,29 +33,34 @@ app.post("/api/resume", async (req, res) => {
 
     const newResume = new Resume(req.body);
 
-    await newResume.save();
+    const savedResume = await newResume.save();
 
     res.status(201).json({
       success: true,
       message: "Resume saved successfully",
-      data: newResume,
+      data: savedResume,
     });
 
   } catch (error) {
 
-    console.log(error);
+    console.log("Resume Save Error:", error);
 
     res.status(500).json({
       success: false,
-      message: "Error saving resume",
+      message: "Failed to save resume",
+      error: error.message,
     });
 
   }
 
 });
 
+/* Server */
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
+
   console.log(`Server running on port ${PORT}`);
+
 });

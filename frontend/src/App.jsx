@@ -3,6 +3,11 @@ import axios from "axios";
 
 function App() {
 
+  const [loading, setLoading] = useState(false);
+
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,26 +36,34 @@ function App() {
 
     e.preventDefault();
 
+    setLoading(true);
+
     try {
 
       const response = await axios.post(
-        "http://localhost:5000/api/resume",
+        `${import.meta.env.VITE_API_URL}/api/resume`,
         formData
       );
 
       if (response.data.success) {
 
-        alert("Resume Saved Successfully!");
+        setSuccessMessage("Resume Saved Successfully!");
+        setErrorMessage("");
 
         console.log(response.data);
 
       }
 
+      setLoading(false);
+
     } catch (error) {
 
       console.log(error);
 
-      alert("Error saving resume");
+      setErrorMessage("Failed to save resume. Please try again.");
+      setSuccessMessage("");
+
+      setLoading(false);
 
     }
 
@@ -239,13 +252,34 @@ function App() {
 
           </div>
 
+          {/* Success Message */}
+
+          {successMessage && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl">
+              {successMessage}
+            </div>
+          )}
+
+          {/* Error Message */}
+
+          {errorMessage && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl">
+              {errorMessage}
+            </div>
+          )}
+
           {/* Submit Button */}
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 transition-all duration-300 text-white font-semibold py-4 rounded-xl shadow-lg"
+            disabled={loading}
+            className={`w-full text-white font-semibold py-4 rounded-xl shadow-lg transition-all duration-300 ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
-            Save Resume
+            {loading ? "Saving Resume..." : "Save Resume"}
           </button>
 
         </form>
