@@ -22,6 +22,7 @@ function App() {
     duration: "",
     experienceDescription: "",
     skills: "",
+    template: "modern",
   });
 
   const handleChange = (e) => {
@@ -64,6 +65,7 @@ function App() {
           duration: "",
           experienceDescription: "",
           skills: "",
+          template: "modern",
         });
 
         setTimeout(() => {
@@ -344,6 +346,23 @@ function App() {
                     {errorMessage}
                   </div>
                 )}
+
+                <div className="bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-sm">
+                  <h3 className="text-2xl font-semibold mb-5 text-slate-800">
+                     Resume Template
+                  </h3>
+
+                  <select
+                    name="template"
+                    value={formData.template}
+                    onChange={handleChange}
+                    className="border border-slate-300 bg-white p-4 rounded-2xl w-full"
+                  >
+                    <option value="modern">Modern</option>
+                    <option value="classic">Classic</option>
+                    <option value="professional">Professional</option>
+                  </select>
+                </div>
 
                 {/* Submit Button */}
 
