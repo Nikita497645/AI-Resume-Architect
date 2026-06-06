@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import ResumePreview from "./components/ResumePreview";
 
 function App() {
 
@@ -102,7 +103,7 @@ function App() {
 
         <div className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.37)] rounded-[32px] overflow-hidden">
 
-          <div className="grid grid-cols-1 xl:grid-cols-5">
+          <div className="grid grid-cols-1 xl:grid-cols-7">
 
             {/* LEFT HERO SECTION */}
 
@@ -360,6 +361,9 @@ function App() {
 
               </form>
 
+            </div>
+            <div className="xl:col-span-2 bg-slate-100 p-6">
+              <ResumePreview formData={formData} />
             </div>
 
           </div>
