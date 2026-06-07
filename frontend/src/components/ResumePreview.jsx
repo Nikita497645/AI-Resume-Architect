@@ -3,33 +3,46 @@ function ResumePreview({ formData }) {
 
   if (template === "classic") {
     return (
-      <div className="bg-white border p-8 shadow-lg rounded-xl h-fit sticky top-6">
-        <h1 className="text-3xl font-bold text-center">
+      <div className="bg-white border border-slate-200 p-10 shadow-2xl rounded-xl h-fit sticky top-6">
+        <h1 className="text-4xl font-bold uppercase tracking-wider text-center">
           {formData.name || "Your Name"}
         </h1>
 
-        <p className="text-center text-gray-600">
-          {formData.email || "your@email.com"}
-        </p>
+        <div className="text-center text-slate-600 mt-2">
+          <p>{formData.email || "your@email.com"}</p>
+          <p>{formData.phone || "+91 XXXXX XXXXX"}</p>
+        </div>
 
-        <p className="text-center text-gray-600">
-          {formData.phone || "+91 XXXXX XXXXX"}
-        </p>
+        <hr className="my-6 border-slate-300" />
 
-        <hr className="my-4" />
+        <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-800 pb-2 mb-4">
+          Education
+        </h2>
 
-        <h2 className="font-bold text-lg mb-2">Education</h2>
-        <p>{formData.degree}</p>
-        <p>{formData.college}</p>
-        <p>{formData.graduationYear}</p>
+        <p className="font-semibold">{formData.degree}</p>
 
-        <h2 className="font-bold text-lg mt-5 mb-2">Experience</h2>
-        <p>{formData.role}</p>
-        <p>{formData.company}</p>
-        <p>{formData.duration}</p>
-        <p>{formData.experienceDescription}</p>
+        <div className="flex justify-between text-slate-700">
+          <span>{formData.college}</span>
+          <span>{formData.graduationYear}</span>
+        </div>
 
-        <h2 className="font-bold text-lg mt-5 mb-2">Skills</h2>
+        <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-800 pb-2 mb-4 mt-8">
+          Experience
+        </h2>
+
+        <p className="font-semibold">{formData.role}</p>
+
+        <div className="flex justify-between text-slate-700">
+          <span>{formData.company}</span>
+          <span>{formData.duration}</span>
+        </div>
+
+        <p className="mt-3">{formData.experienceDescription}</p>
+
+        <h2 className="text-lg font-bold uppercase tracking-widest border-b-2 border-slate-800 pb-2 mb-4 mt-8">
+          Skills
+        </h2>
+
         <p>{formData.skills}</p>
       </div>
     );
@@ -37,112 +50,155 @@ function ResumePreview({ formData }) {
 
   if (template === "professional") {
     return (
-      <div className="bg-slate-900 text-white p-8 rounded-3xl shadow-xl h-fit sticky top-6">
-        <h1 className="text-3xl font-bold">
-          {formData.name || "Your Name"}
-        </h1>
+      <div className="bg-slate-900 text-white p-10 rounded-3xl shadow-2xl h-fit sticky top-6">
+        <div className="text-center border-b border-blue-500 pb-5">
+          <h1 className="text-4xl font-bold uppercase tracking-wider">
+            {formData.name || "Your Name"}
+          </h1>
 
-        <p>{formData.email || "your@email.com"}</p>
-        <p>{formData.phone || "+91 XXXXX XXXXX"}</p>
+          <p className="mt-2">
+            {formData.email || "your@email.com"}
+          </p>
 
-        <div className="mt-6">
-          <h2 className="text-blue-400 text-xl font-bold border-b border-blue-500 pb-2 mb-3">
+          <p>
+            {formData.phone || "+91 XXXXX XXXXX"}
+          </p>
+        </div>
+
+        <div className="mt-8">
+          <h2 className="text-blue-400 text-lg font-bold uppercase tracking-widest border-b border-blue-500 pb-2 mb-4">
             Education
           </h2>
 
-          <p>{formData.degree}</p>
-          <p>{formData.college}</p>
-          <p>{formData.graduationYear}</p>
-          <p>{formData.cgpa && `CGPA: ${formData.cgpa}`}</p>
+          <p className="font-semibold">{formData.degree}</p>
+
+          <div className="flex justify-between">
+            <span>{formData.college}</span>
+            <span>{formData.graduationYear}</span>
+          </div>
+
+          {formData.cgpa && (
+            <p className="mt-2">CGPA: {formData.cgpa}</p>
+          )}
         </div>
 
-        <div className="mt-6">
-          <h2 className="text-blue-400 text-xl font-bold border-b border-blue-500 pb-2 mb-3">
+        <div className="mt-8">
+          <h2 className="text-blue-400 text-lg font-bold uppercase tracking-widest border-b border-blue-500 pb-2 mb-4">
             Experience
           </h2>
 
-          <p>{formData.role}</p>
-          <p>{formData.company}</p>
-          <p>{formData.duration}</p>
-          <p>{formData.experienceDescription}</p>
+          <p className="font-semibold">{formData.role}</p>
+
+          <div className="flex justify-between">
+            <span>{formData.company}</span>
+            <span>{formData.duration}</span>
+          </div>
+
+          <p className="mt-3">
+            {formData.experienceDescription}
+          </p>
         </div>
 
-        <div className="mt-6">
-          <h2 className="text-blue-400 text-xl font-bold border-b border-blue-500 pb-2 mb-3">
+        <div className="mt-8">
+          <h2 className="text-blue-400 text-lg font-bold uppercase tracking-widest border-b border-blue-500 pb-2 mb-4">
             Skills
           </h2>
 
-          <p>{formData.skills}</p>
+          <div className="flex flex-wrap gap-2">
+            {formData.skills ? (
+              formData.skills.split(",").map((skill, index) => (
+                <span
+                  key={index}
+                  className="bg-blue-600 px-4 py-2 rounded-full text-sm"
+                >
+                  {skill.trim()}
+                </span>
+              ))
+            ) : (
+              <span className="text-slate-400">
+                No skills added yet
+              </span>
+            )}
+          </div>
         </div>
       </div>
     );
   }
 
-  // MODERN TEMPLATE (DEFAULT)
-
   return (
-    <div className="bg-white rounded-3xl p-8 shadow-xl h-fit sticky top-6">
-      <div className="border-b pb-4 mb-4">
-        <h1 className="text-3xl font-bold text-slate-800">
+    <div className="bg-white w-full max-w-[800px] min-h-[1000px] mx-auto p-10 shadow-2xl border border-slate-200 rounded-2xl h-fit sticky top-6">
+
+      {/* HEADER */}
+
+      <div className="text-center border-b-2 border-slate-800 pb-6 mb-8">
+        <h1 className="text-4xl font-bold uppercase tracking-wider text-slate-900">
           {formData.name || "Your Name"}
         </h1>
 
-        <p className="text-slate-600">
-          {formData.email || "your@email.com"}
-        </p>
-
-        <p className="text-slate-600">
-          {formData.phone || "+91 XXXXX XXXXX"}
-        </p>
+        <div className="mt-3 text-slate-600 text-sm">
+          <p>{formData.email || "your@email.com"}</p>
+          <p>{formData.phone || "+91 XXXXX XXXXX"}</p>
+        </div>
       </div>
 
-      <section className="mb-6">
-        <h2 className="text-xl font-bold text-blue-600 border-b pb-1 mb-2">
+      {/* EDUCATION */}
+
+      <section className="mb-8">
+        <h2 className="text-lg font-bold uppercase tracking-widest text-slate-800 border-b-2 border-blue-600 pb-2 mb-4">
           Education
         </h2>
 
-        <p className="font-semibold">
+        <p className="font-semibold text-lg">
           {formData.degree || "Degree"}
         </p>
 
-        <p>{formData.college || "College Name"}</p>
+        <div className="flex justify-between text-slate-700 mt-1">
+          <span>{formData.college || "College Name"}</span>
+          <span>{formData.graduationYear || "Graduation Year"}</span>
+        </div>
 
-        <p>{formData.graduationYear || "Graduation Year"}</p>
-
-        <p>
-          {formData.cgpa && `CGPA: ${formData.cgpa}`}
-        </p>
+        {formData.cgpa && (
+          <p className="mt-2 text-slate-700">
+            CGPA: {formData.cgpa}
+          </p>
+        )}
       </section>
 
-      <section className="mb-6">
-        <h2 className="text-xl font-bold text-blue-600 border-b pb-1 mb-2">
+      {/* EXPERIENCE */}
+
+      <section className="mb-8">
+        <h2 className="text-lg font-bold uppercase tracking-widest text-slate-800 border-b-2 border-blue-600 pb-2 mb-4">
           Experience
         </h2>
 
-        <p className="font-semibold">
+        <p className="font-semibold text-lg">
           {formData.role || "Role"}
         </p>
 
-        <p>{formData.company || "Company Name"}</p>
+        <div className="flex justify-between text-slate-700">
+          <span>{formData.company || "Company Name"}</span>
+          <span>{formData.duration || "Duration"}</span>
+        </div>
 
-        <p>{formData.duration}</p>
-
-        <p className="mt-2 text-slate-700">
-          {formData.experienceDescription}
+        <p className="mt-3 text-slate-700 leading-relaxed">
+          {formData.experienceDescription ||
+            "Describe your work experience here."}
         </p>
       </section>
 
+      {/* SKILLS */}
+
       <section>
-        <h2 className="text-xl font-bold text-blue-600 border-b pb-1 mb-2">
+        <h2 className="text-lg font-bold uppercase tracking-widest text-slate-800 border-b-2 border-blue-600 pb-2 mb-4">
           Skills
         </h2>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-3">
           {formData.skills ? (
             formData.skills.split(",").map((skill, index) => (
               <span
                 key={index}
-                className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm"
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-full text-sm shadow-md"
               >
                 {skill.trim()}
               </span>
