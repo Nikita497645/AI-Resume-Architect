@@ -17,20 +17,16 @@ app.use(express.json());
 /* Root Route */
 
 app.get("/", (req, res) => {
-
   res.status(200).json({
     success: true,
     message: "CareerForge Pro Backend Running",
   });
-
 });
 
 /* Save Resume API */
 
 app.post("/api/resume", async (req, res) => {
-
   try {
-
     const newResume = new Resume(req.body);
 
     const savedResume = await newResume.save();
@@ -40,9 +36,7 @@ app.post("/api/resume", async (req, res) => {
       message: "Resume saved successfully",
       data: savedResume,
     });
-
   } catch (error) {
-
     console.log("Resume Save Error:", error);
 
     res.status(500).json({
@@ -50,9 +44,40 @@ app.post("/api/resume", async (req, res) => {
       message: "Failed to save resume",
       error: error.message,
     });
-
   }
+});
 
+/* Update Resume API */
+
+app.put("/api/resume/:id", async (req, res) => {
+  try {
+    const updatedResume = await Resume.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    if (!updatedResume) {
+      return res.status(404).json({
+        success: false,
+        message: "Resume not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Resume updated successfully",
+      data: updatedResume,
+    });
+  } catch (error) {
+    console.log("Resume Update Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to update resume",
+      error: error.message,
+    });
+  }
 });
 
 /* Server */
@@ -60,7 +85,5 @@ app.post("/api/resume", async (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-
   console.log(`Server running on port ${PORT}`);
-
 });

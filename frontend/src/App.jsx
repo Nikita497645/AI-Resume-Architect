@@ -8,6 +8,8 @@ function App() {
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [resumeId, setResumeId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -42,31 +44,38 @@ function App() {
 
     try {
 
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/resume`,
-        formData
-      );
+      let response;
+
+      if (isEditing && resumeId) {
+
+        response = await axios.put(
+          `${import.meta.env.VITE_API_URL}/api/resume/${resumeId}`,
+          formData
+        );
+
+      } else {
+
+        response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/resume`,
+          formData
+        );
+
+        if (response.data.data?._id) {
+          setResumeId(response.data.data._id);
+          setIsEditing(true);
+        }
+
+      }
 
       if (response.data.success) {
 
-        setSuccessMessage("Resume Saved Successfully!");
-        setErrorMessage("");
+        setSuccessMessage(
+          isEditing
+            ? "Resume Updated Successfully!"
+            : "Resume Saved Successfully!"
+        );
 
-        setFormData({
-          name: "",
-          email: "",
-          phone: "",
-          college: "",
-          degree: "",
-          cgpa: "",
-          graduationYear: "",
-          company: "",
-          role: "",
-          duration: "",
-          experienceDescription: "",
-          skills: "",
-          template: "modern",
-        });
+        setErrorMessage("");
 
         setTimeout(() => {
           setSuccessMessage("");
@@ -74,18 +83,16 @@ function App() {
 
       }
 
-      setLoading(false);
-
     } catch (error) {
 
       console.log(error);
 
-      setErrorMessage("Failed to save resume. Please try again.");
+      setErrorMessage("Failed to process resume.");
       setSuccessMessage("");
 
-      setLoading(false);
-
     }
+
+    setLoading(false);
 
   };
 
@@ -375,7 +382,13 @@ function App() {
                       : "bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(37,99,235,0.45)] hover:brightness-110"
                   }`}
                 >
-                  {loading ? "Saving Resume..." : "Save Resume"}
+                  {
+                    loading
+                    ? "Processing..."
+                    : isEditing
+                    ? "Update Resume"
+                    : "Save Resume"
+                  }
                 </button>
 
               </form>
