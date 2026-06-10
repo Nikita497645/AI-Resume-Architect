@@ -6,6 +6,9 @@ function App() {
 
   const [loading, setLoading] = useState(false);
 
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiSuggestions, setAiSuggestions] = useState("");
+
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [resumeId, setResumeId] = useState(null);
@@ -38,63 +41,94 @@ function App() {
 
   const handleSubmit = async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
+  try {
 
-      let response;
+    let response;
 
-      if (isEditing && resumeId) {
+    if (isEditing && resumeId) {
 
-        response = await axios.put(
-          `${import.meta.env.VITE_API_URL}/api/resume/${resumeId}`,
-          formData
-        );
+      response = await axios.put(
+        `${import.meta.env.VITE_API_URL}/api/resume/${resumeId}`,
+        formData
+      );
 
-      } else {
+    } else {
 
-        response = await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/resume`,
-          formData
-        );
+      response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/resume`,
+        formData
+      );
 
-        if (response.data.data?._id) {
-          setResumeId(response.data.data._id);
-          setIsEditing(true);
-        }
-
+      if (response.data.data?._id) {
+        setResumeId(response.data.data._id);
+        setIsEditing(true);
       }
-
-      if (response.data.success) {
-
-        setSuccessMessage(
-          isEditing
-            ? "Resume Updated Successfully!"
-            : "Resume Saved Successfully!"
-        );
-
-        setErrorMessage("");
-
-        setTimeout(() => {
-          setSuccessMessage("");
-        }, 3000);
-
-      }
-
-    } catch (error) {
-
-      console.log(error);
-
-      setErrorMessage("Failed to process resume.");
-      setSuccessMessage("");
 
     }
 
-    setLoading(false);
+    if (response.data.success) {
 
-  };
+      setSuccessMessage(
+        isEditing
+          ? "Resume Updated Successfully!"
+          : "Resume Saved Successfully!"
+      );
+
+      setErrorMessage("");
+
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
+
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+    setErrorMessage("Failed to process resume.");
+    setSuccessMessage("");
+
+  }
+
+  setLoading(false);
+
+};
+
+const handleImproveResume = async () => {
+
+  try {
+
+    setAiLoading(true);
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/ai/improve`,
+      {
+        formData,
+      }
+    );
+
+    if (response.data.success) {
+      setAiSuggestions(response.data.response);
+    }
+
+  } catch (error) {
+
+    console.log(error);
+
+    setAiSuggestions(
+      "Failed to generate AI suggestions."
+    );
+
+  }
+
+  setAiLoading(false);
+
+};
 
   return (
 
@@ -373,23 +407,61 @@ function App() {
 
                 {/* Submit Button */}
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`w-full text-white font-semibold py-5 rounded-2xl shadow-xl transition-all duration-300 text-lg ${
-                    loading
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:scale-[1.02] hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(37,99,235,0.45)] hover:brightness-110"
-                  }`}
-                >
-                  {
-                    loading
-                    ? "Processing..."
-                    : isEditing
-                    ? "Update Resume"
-                    : "Save Resume"
-                  }
-                </button>
+                <div className="flex flex-col sm:flex-row gap-4">
+
+                  <button
+                    type="button"
+                    onClick={handleImproveResume}
+                    disabled={aiLoading}
+                    className={`flex-1 text-white font-semibold py-5 rounded-2xl shadow-xl transition-all duration-300 text-lg ${
+                      aiLoading
+                        ? "bg-purple-400 cursor-not-allowed"
+                        : "bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 hover:scale-[1.02] hover:-translate-y-1"
+                    }`}
+                  >
+                    {
+                      aiLoading
+                        ? "Improving Resume..."
+                        : "✨ Improve Resume"
+                     }
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className={`flex-1 text-white font-semibold py-5 rounded-2xl shadow-xl transition-all duration-300 text-lg ${
+                      loading
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:scale-[1.02] hover:-translate-y-1"
+                 }`}
+            >
+             {
+              loading
+                 ? "Processing..."
+                 : isEditing
+                 ? "Update Resume"
+                 : "Save Resume"
+         }
+  </button>
+  {
+  aiSuggestions && (
+
+    <div className="mt-6 bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-3xl p-6 shadow-lg">
+
+      <h3 className="text-2xl font-bold text-indigo-700 mb-4">
+        🤖 AI Resume Suggestions
+      </h3>
+
+      <pre className="whitespace-pre-wrap text-slate-700 leading-relaxed font-sans">
+        {aiSuggestions}
+      </pre>
+
+    </div>
+
+  )
+}
+
+</div>
 
               </form>
 
@@ -410,4 +482,4 @@ function App() {
 
 }
 
-export default App;
+export default App;                                        

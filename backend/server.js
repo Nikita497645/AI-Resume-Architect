@@ -2,10 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
+dotenv.config();
+
+console.log("SERVER KEY FOUND:", !!process.env.GROQ_API_KEY);
+
 const connectDB = require("./config/db");
 const Resume = require("./models/Resume");
-
-dotenv.config();
+const aiRoutes = require("./routes/aiRoutes");
 
 connectDB();
 
@@ -13,6 +16,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/ai", aiRoutes);
 
 /* Root Route */
 
