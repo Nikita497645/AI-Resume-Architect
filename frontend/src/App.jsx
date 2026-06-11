@@ -7,6 +7,7 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const [aiLoading, setAiLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("");
   const [aiSuggestions, setAiSuggestions] = useState("");
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -99,11 +100,21 @@ function App() {
 
 };
 
-const handleImproveResume = async () => {
+
+ const handleImproveResume = async () => {
 
   try {
 
     setAiLoading(true);
+    setLoadingMessage("🔍 Analyzing your resume...");
+
+    setTimeout(() => {
+      setLoadingMessage("📊 Checking ATS optimization...");
+    }, 2000);
+
+    setTimeout(() => {
+      setLoadingMessage("🤖 Generating AI improvements...");
+    }, 4000);
 
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/api/ai/improve`,
@@ -127,6 +138,7 @@ const handleImproveResume = async () => {
   }
 
   setAiLoading(false);
+  setLoadingMessage("");
 
 };
 
@@ -425,6 +437,15 @@ const handleImproveResume = async () => {
                         : "✨ Improve Resume"
                      }
                   </button>
+                    {aiLoading && (
+                      <div className="flex items-center gap-3 px-4 py-2 bg-purple-50 border border-purple-200 rounded-2xl">
+                        <div className="h-5 w-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+
+                        <p className="text-purple-700 font-medium text-sm">
+                          {loadingMessage}
+                        </p>
+                      </div>
+                    )}
 
                   <button
                     type="submit"
