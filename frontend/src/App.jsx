@@ -124,18 +124,37 @@ function App() {
     );
 
     if (response.data.success) {
-      setAiSuggestions(response.data.response);
+      setAiSuggestions(
+        response.data.response ||
+        "No suggestions generated."
+      );
     }
 
   } catch (error) {
 
-    console.log(error);
+  console.error(error);
+
+  if (error.response) {
 
     setAiSuggestions(
-      "Failed to generate AI suggestions."
+      "⚠️ Server error while generating suggestions."
+    );
+
+  } else if (error.request) {
+
+    setAiSuggestions(
+      "⚠️ Unable to connect to AI service."
+    );
+
+  } else {
+
+    setAiSuggestions(
+      "⚠️ Something went wrong."
     );
 
   }
+
+}
 
   setAiLoading(false);
   setLoadingMessage("");
@@ -473,9 +492,9 @@ function App() {
         🤖 AI Resume Suggestions
       </h3>
 
-      <pre className="whitespace-pre-wrap text-slate-700 leading-relaxed font-sans">
+      <div className="whitespace-pre-wrap text-slate-700 leading-relaxed font-sans">
         {aiSuggestions}
-      </pre>
+      </div>
 
     </div>
 
