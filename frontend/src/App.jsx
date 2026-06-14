@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import axios from "axios";
 import ResumePreview from "./components/ResumePreview";
 
@@ -14,6 +14,8 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [resumeId, setResumeId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [atsScore, setAtsScore] = useState(0);
+  const [missingKeywords, setMissingKeywords] = useState([]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -160,6 +162,52 @@ function App() {
   setLoadingMessage("");
 
 };
+  const calculateATS = () => {
+
+  const atsKeywords = [
+    "react",
+    "node",
+    "mongodb",
+    "javascript",
+    "html",
+    "css",
+    "express",
+    "api",
+    "git",
+    "github",
+  ];
+
+  const resumeText = `
+    ${formData.skills}
+    ${formData.experienceDescription}
+    ${formData.degree}
+    ${formData.role}
+  `.toLowerCase();
+
+  let found = 0;
+  const missing = [];
+
+  atsKeywords.forEach((keyword) => {
+
+    if (resumeText.includes(keyword)) {
+      found++;
+    } else {
+      missing.push(keyword);
+    }
+
+  });
+
+  const score = Math.round(
+    (found / atsKeywords.length) * 100
+  );
+
+  setAtsScore(score);
+  setMissingKeywords(missing);
+
+};
+  useEffect(() => {
+    calculateATS();
+  },[formData]);
 
   return (
 
@@ -507,7 +555,55 @@ function App() {
 
             </div>
             <div className="xl:col-span-2 bg-slate-100 p-6">
-              <ResumePreview formData={formData} />
+
+              <div className="bg-white p-5 rounded-xl shadow mb-4">
+
+                <h2 className="text-xl font-bold mb-3">
+                  ATS Score
+                </h2>
+
+                <div className="text-4xl font-bold text-green-600">
+                  {atsScore}%
+                </div>
+
+                <p className="text-sm text-slate-500 mt-2">
+                  Resume ATS Compatibility Score
+                </p>
+
+            </div>
+
+            <div className="bg-white p-5 rounded-xl shadow mb-4">
+
+              <h3 className="font-bold mb-3">
+              Missing Keywords
+              </h3>
+
+              <div className="flex flex-wrap gap-2">
+
+                {missingKeywords.length > 0 ? (
+
+                  missingKeywords.map((keyword, index) => (
+                    <span
+                      key={index}
+                      className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm"
+                    >
+                      {keyword}
+                    </span>
+                  ))
+
+                ) : (
+
+                  <span className="text-green-600">
+                    All ATS keywords found
+                  </span>
+
+                )}
+
+              </div>
+
+            </div>
+
+            <ResumePreview formData={formData} />
             </div>
 
           </div>
