@@ -1,4 +1,4 @@
-import { useState , useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import ResumePreview from "./components/ResumePreview";
 
@@ -14,8 +14,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [resumeId, setResumeId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [atsScore, setAtsScore] = useState(0);
-  const [missingKeywords, setMissingKeywords] = useState([]);
+  
 
   const [formData, setFormData] = useState({
     name: "",
@@ -100,10 +99,10 @@ function App() {
 
   setLoading(false);
 
-};
+  };
 
 
- const handleImproveResume = async () => {
+  const handleImproveResume = async () => {
 
   try {
 
@@ -127,9 +126,15 @@ function App() {
 
     if (response.data.success) {
       setAiSuggestions(
-        response.data.response ||
+        response.data.aiResponse ||
         "No suggestions generated."
       );
+
+      setLoadingMessage("✅ AI analysis completed!");
+
+      setTimeout(() => {
+        setLoadingMessage("");
+      }, 2000);
     }
 
   } catch (error) {
@@ -156,58 +161,46 @@ function App() {
 
   }
 
-}
+  } finally {
+    
+      setAiLoading(false);
+  }
 
-  setAiLoading(false);
-  setLoadingMessage("");
+  };
 
-};
-  const calculateATS = () => {
+ 
+    const atsKeywords = [
+      "react",
+      "node",
+      "mongodb",
+      "javascript",
+      "express",
+      "api",
+      "git",
+      "html",
+      "css",
+      "tailwind",
+    ];
 
-  const atsKeywords = [
-    "react",
-    "node",
-    "mongodb",
-    "javascript",
-    "html",
-    "css",
-    "express",
-    "api",
-    "git",
-    "github",
-  ];
+    const content = `
+${formData.skills}
+${formData.experienceDescription}
+${formData.degree}
+${formData.role}
+    `.toLowerCase();
 
-  const resumeText = `
-    ${formData.skills}
-    ${formData.experienceDescription}
-    ${formData.degree}
-    ${formData.role}
-  `.toLowerCase();
+    const foundKeywords = atsKeywords.filter((keyword) =>
+      content.includes(keyword)
+    );
 
-  let found = 0;
-  const missing = [];
+    const atsScore = Math.round(
+      (foundKeywords.length / atsKeywords.length) * 100
+    );
 
-  atsKeywords.forEach((keyword) => {
-
-    if (resumeText.includes(keyword)) {
-      found++;
-    } else {
-      missing.push(keyword);
-    }
-
-  });
-
-  const score = Math.round(
-    (found / atsKeywords.length) * 100
-  );
-
-  setAtsScore(score);
-  setMissingKeywords(missing);
-
-};
-  useEffect(() => {
-    calculateATS();
-  },[formData]);
+    const missingKeywords = atsKeywords.filter(
+      (keyword) => !content.includes(keyword)
+    );
+  
 
   return (
 
@@ -495,24 +488,11 @@ function App() {
                     className={`flex-1 text-white font-semibold py-5 rounded-2xl shadow-xl transition-all duration-300 text-lg ${
                       aiLoading
                         ? "bg-purple-400 cursor-not-allowed"
-                        : "bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 hover:scale-[1.02] hover:-translate-y-1"
+                        : "bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 hover:scale-[1.02]"
                     }`}
                   >
-                    {
-                      aiLoading
-                        ? "Improving Resume..."
-                        : "✨ Improve Resume"
-                     }
+                    {aiLoading ? "Improving Resume..." : "✨ Improve Resume"}
                   </button>
-                    {aiLoading && (
-                      <div className="flex items-center gap-3 px-4 py-2 bg-purple-50 border border-purple-200 rounded-2xl">
-                        <div className="h-5 w-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
-
-                        <p className="text-purple-700 font-medium text-sm">
-                          {loadingMessage}
-                        </p>
-                      </div>
-                    )}
 
                   <button
                     type="submit"
@@ -520,37 +500,39 @@ function App() {
                     className={`flex-1 text-white font-semibold py-5 rounded-2xl shadow-xl transition-all duration-300 text-lg ${
                       loading
                         ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:scale-[1.02] hover:-translate-y-1"
-                 }`}
-            >
-             {
-              loading
-                 ? "Processing..."
-                 : isEditing
-                 ? "Update Resume"
-                 : "Save Resume"
-         }
-  </button>
-  {
-  aiSuggestions && (
+                        : "bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:scale-[1.02]"
+                    }`}
+                  >
+                    {loading
+                      ? "Processing..."
+                      : isEditing
+                      ? "Update Resume"
+                      : "Save Resume"}
+                  </button>
 
-    <div className="mt-6 bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-3xl p-6 shadow-lg">
+                </div>
 
-      <h3 className="text-2xl font-bold text-indigo-700 mb-4">
-        🤖 AI Resume Suggestions
-      </h3>
+                {aiLoading && (
+                  <div className="mt-4 flex items-center gap-3 px-4 py-2 bg-purple-50 border border-purple-200 rounded-2xl">
+                    <div className="h-5 w-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
 
-      <div className="whitespace-pre-wrap text-slate-700 leading-relaxed font-sans">
-        {aiSuggestions}
-      </div>
+                    <p className="text-purple-700 font-medium text-sm">
+                      {loadingMessage}
+                    </p>
+                  </div>
+                )}
 
-    </div>
+                {aiSuggestions && (
+                  <div className="mt-6 bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-3xl p-6 shadow-lg">
+                    <h3 className="text-2xl font-bold text-indigo-700 mb-4">
+                      🤖 AI Resume Suggestions
+                    </h3>
 
-  )
-}
-
-</div>
-
+                    <div className="whitespace-pre-wrap text-slate-700 leading-relaxed">
+                      {aiSuggestions}
+                    </div>
+                  </div>
+                )}
               </form>
 
             </div>
