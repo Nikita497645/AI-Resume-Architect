@@ -168,6 +168,36 @@ function App() {
 
   };
 
+  const handleDownloadPDF = async () => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/generate-pdf",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formData }),
+      }
+    );
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "Resume.pdf";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.log("PDF Download Error:", error);
+  }
+};
+
  
     const atsKeywords = [
       "react",
@@ -492,6 +522,14 @@ ${formData.role}
                     }`}
                   >
                     {aiLoading ? "Improving Resume..." : "✨ Improve Resume"}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleDownloadPDF}
+                    className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-xl shadow-lg transition-all"
+                  >
+                    📄 Download PDF
                   </button>
 
                   <button

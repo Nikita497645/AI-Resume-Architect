@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const puppeteer = require("puppeteer");
 
 dotenv.config();
 
@@ -80,6 +81,144 @@ app.put("/api/resume/:id", async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to update resume",
+      error: error.message,
+    });
+  }
+});
+
+/* Generate PDF API */
+
+app.post("/api/generate-pdf", async (req, res) => {
+  try {
+    const { formData } = req.body;
+
+    const browser = await puppeteer.launch({
+      headless: true,
+    });
+
+    const page = await browser.newPage();
+
+    await page.setContent(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <style>
+    body{
+      font-family: Arial, sans-serif;
+      padding:40px;
+      color:#333;
+   }
+
+   .header{
+      text-align:center;
+      border-bottom:3px solid #2563eb;
+      padding-bottom:15px;
+    }
+
+    .name{
+      font-size:32px;
+      font-weight:bold;
+      color:#1e40af;
+    }
+
+    .section{
+      margin-top:25px;
+    }
+
+    .section h2{
+      color:#2563eb;
+      border-bottom:2px solid #dbeafe;
+      padding-bottom:5px;
+    }
+
+    .skills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+   }
+
+   .skill{
+     background:#2563eb;
+     color:white;
+     padding:6px 12px;
+     border-radius:20px;
+     font-size:12px;
+   }
+
+.info{
+  margin-top:8px;
+}
+
+p{
+  line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="name">${formData.name || "Your Name"}</div>
+  <p>${formData.email || ""}</p>
+  <p>${formData.phone || ""}</p>
+</div>
+
+<div class="section">
+  <h2>Education</h2>
+  <p><strong>Degree:</strong> ${formData.degree || ""}</p>
+  <p><strong>College:</strong> ${formData.college || ""}</p>
+  <p><strong>CGPA:</strong> ${formData.cgpa || ""}</p>
+</div>
+
+<div class="section">
+  <h2>Experience</h2>
+  <p><strong>${formData.role || ""}</strong></p>
+  <p>${formData.company || ""}</p>
+  <p>${formData.experienceDescription || ""}</p>
+</div>
+
+<div class="section">
+  <h2>Skills</h2>
+
+  <div class="skills">
+    ${(formData.skills || "")
+      .split(",")
+      .map(
+        skill => `
+          <span class="skill">
+            ${skill.trim()}
+          </span>
+        `
+      )
+      .join("")}
+  </div>
+
+</div>
+
+</body>
+</html>
+`);
+
+    const pdf = await page.pdf({
+      format: "A4",
+      printBackground: true,
+    });
+
+    await browser.close();
+
+    res.set({
+      "Content-Type": "application/pdf",
+      "Content-Length": pdf.length,
+    });
+
+    return res.send(pdf);
+
+  } catch (error) {
+    console.log("PDF Generation Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to generate PDF",
       error: error.message,
     });
   }
