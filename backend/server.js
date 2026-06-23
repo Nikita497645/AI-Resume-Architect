@@ -103,10 +103,16 @@ app.post("/api/generate-pdf", async (req, res) => {
     <html>
     <head>
     <style>
+
+    @page {
+      size: A4;
+      margin: 25px;
+   }
     body{
       font-family: Arial, sans-serif;
       padding:40px;
       color:#333;
+      line-height:1.6;
    }
 
    .header{
@@ -122,13 +128,14 @@ app.post("/api/generate-pdf", async (req, res) => {
     }
 
     .section{
-      margin-top:25px;
+      page-break-inside: avoid;
     }
 
     .section h2{
       color:#2563eb;
       border-bottom:2px solid #dbeafe;
       padding-bottom:5px;
+      margin-bottom:15px;
     }
 
     .skills{
@@ -150,7 +157,7 @@ app.post("/api/generate-pdf", async (req, res) => {
 }
 
 p{
-  line-height:1.6;
+  margin:8px 0;
 }
 </style>
 </head>
@@ -167,14 +174,16 @@ p{
   <h2>Education</h2>
   <p><strong>Degree:</strong> ${formData.degree || ""}</p>
   <p><strong>College:</strong> ${formData.college || ""}</p>
+  <p><strong>Graduation Year:</strong> ${formData.graduationYear || ""}</p>
   <p><strong>CGPA:</strong> ${formData.cgpa || ""}</p>
 </div>
 
 <div class="section">
   <h2>Experience</h2>
-  <p><strong>${formData.role || ""}</strong></p>
-  <p>${formData.company || ""}</p>
-  <p>${formData.experienceDescription || ""}</p>
+  <p><strong>Role:</strong> ${formData.role || ""}</p>
+  <p><strong>Company:</strong> ${formData.company || ""}</p>
+  <p><strong>Duration:</strong> ${formData.duration || ""}</p>
+  <p><strong>Description:</strong> ${formData.experienceDescription || ""}</p>
 </div>
 
 <div class="section">
