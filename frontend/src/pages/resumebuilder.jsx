@@ -240,418 +240,329 @@
           const missingKeywords = atsKeywords.filter(
             (keyword) => !content.includes(keyword)
           );
-        
-      
+       
         return (
-          
+            <div className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 py-6 sm:py-10 px-3 sm:px-4 md:px-8 overflow-y-auto">
+    
+                {/* Background Glow Effects */}
+                <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div className="relative z-10 max-w-7xl mx-auto space-y-6 animate-[fadeIn_0.6s_ease-in-out]">
       
-          <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 py-6 sm:py-10 px-3 sm:px-4 md:px-8">
-                <button
-                  onClick={() => navigate("/")}
-                  className="mb-4 px-4 py-2 bg-gray-700 text-white rounded"
-                >
-                  ← Back to Welcome
-                </button>
-      
-            {/* Background Glow Effects */}
-      
-            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-3xl"></div>
-      
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-500/20 rounded-full blur-3xl"></div>
-      
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-cyan-400/10 rounded-full blur-3xl"></div>
-      
-            <div className="relative z-10 max-w-7xl mx-auto animate-[fadeIn_0.8s_ease-in-out]">
-      
-              <div className="backdrop-blur-xl bg-white/10 border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.37)] rounded-[32px] overflow-hidden">
-      
-                <div className="grid grid-cols-1 xl:grid-cols-7">
-      
-                  {/* LEFT HERO SECTION */}
-      
-                  <div className="xl:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-7 sm:p-10 md:p-14 flex flex-col justify-center relative overflow-hidden">
-      
-                    <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
-      
-                    <div className="relative z-10">
-      
-                      <div className="inline-flex items-center gap-2 bg-white/20 border border-white/20 px-4 py-2 rounded-full text-sm w-fit mb-6 backdrop-blur-md shadow-lg">
-                        <span className="h-2 w-2 rounded-full bg-green-400"></span>
-                        AI-Powered Resume Intelligence
-                      </div>
-      
-                      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6 tracking-tight">
-                        CareerForge <br /> Pro
-                      </h1>
-      
-                      <p className="text-blue-100 text-lg leading-relaxed mb-10 max-w-md">
-                        Build ATS-optimized resumes with a modern AI-powered workflow designed
-                        for students, developers, and professionals.
-                      </p>
-      
-                      <div className="space-y-5 text-sm text-blue-100">
-      
-                        <div className="flex items-center gap-3 bg-white/10 border border-white/10 rounded-xl px-4 py-3 backdrop-blur-sm">
-                          <div className="h-2 w-2 rounded-full bg-cyan-300"></div>
-                          Professional Resume Builder
-                        </div>
-      
-                        <div className="flex items-center gap-3 bg-white/10 border border-white/10 rounded-xl px-4 py-3 backdrop-blur-sm">
-                          <div className="h-2 w-2 rounded-full bg-cyan-300"></div>
-                          ATS Optimization Ready
-                        </div>
-      
-                        <div className="flex items-center gap-3 bg-white/10 border border-white/10 rounded-xl px-4 py-3 backdrop-blur-sm">
-                          <div className="h-2 w-2 rounded-full bg-cyan-300"></div>
-                          MERN Stack Powered
-                        </div>
-      
-                      </div>
-      
+                    {/* Navigation */}
+                    <div className="flex items-center justify-between">
+                        <button
+                            onClick={() => navigate("/")}
+                            className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-xl transition-all border border-slate-700"
+                        >
+                            ← Back to Welcome
+                        </button>
                     </div>
       
-                  </div>
-      
-                  {/* RIGHT FORM SECTION */}
-      
-                  <div className="xl:col-span-3 bg-white p-5 sm:p-8 md:p-12 lg:p-14">
-      
-                    <div className="mb-12">
-      
-                      <h2 className="text-4xl font-bold text-slate-800 mb-3 tracking-tight">
-                        Resume Builder
-                      </h2>
-      
-                      <p className="text-slate-500 text-lg leading-relaxed">
-                        Fill in your professional details to generate an ATS-ready resume.
-                      </p>
-      
+                    {/* Header Banner */}
+                    <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                            CareerForge Pro
+                        </h1>
+                        <p className="mt-1.5 text-blue-100 text-sm sm:text-base opacity-90">
+                            AI-Powered Resume Builder & ATS Optimizer
+                        </p>
                     </div>
       
-                    <form onSubmit={handleSubmit} className="space-y-10">
-      
-                      {/* Personal Information */}
-      
-                      <div className="bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
-      
-                        <h3 className="text-2xl font-semibold mb-7 text-slate-800">
-                          Personal Information
-                        </h3>
-      
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-      
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Full Name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400"
-                            required
-                          />
-      
-                          <input
-                            type="email"
-                            name="email"
-                            placeholder="Email Address"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400"
-                            required
-                          />
-      
+                    {/* Top Section: Analytics */}
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+
+                        {/* ATS Score */}
+                        <div className="md:col-span-2 bg-slate-900/60 backdrop-blur-md border border-slate-800 p-6 rounded-2xl shadow-md flex flex-col justify-center">
+                            <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+                                ATS Score
+                            </h2>
+                            <div className="flex items-baseline gap-2 mt-2">
+                                <span className="text-5xl font-black text-emerald-400">{atsScore}%</span>
+                                <span className="text-slate-400 text-sm font-medium">Compatibility</span>
+                            </div>
+                            <div className="w-full bg-slate-800 h-2 rounded-full mt-4 overflow-hidden">
+                                <div className="bg-emerald-400 h-full transition-all duration-500" style={{ width: `${atsScore}%` }}></div>
+                            </div>
                         </div>
-      
-                        <input
-                          type="text"
-                          name="phone"
-                          placeholder="Phone Number"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400 w-full mt-5"
-                          required
-                        />
-      
-                      </div>
-      
-                      {/* Education */}
-      
-                      <div className="bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
-      
-                        <h3 className="text-2xl font-semibold mb-7 text-slate-800">
-                          Education
-                        </h3>
-      
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-      
-                          <input
-                            type="text"
-                            name="college"
-                            placeholder="College / University"
-                            value={formData.college}
-                            onChange={handleChange}
-                            className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400"
-                          />
-      
-                          <input
-                            type="text"
-                            name="degree"
-                            placeholder="Degree"
-                            value={formData.degree}
-                            onChange={handleChange}
-                            className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400"
-                          />
-      
-                          <input
-                            type="text"
-                            name="cgpa"
-                            placeholder="CGPA"
-                            value={formData.cgpa}
-                            onChange={handleChange}
-                            className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400"
-                          />
-      
-                          <input
-                            type="text"
-                            name="graduationYear"
-                            placeholder="Graduation Year"
-                            value={formData.graduationYear}
-                            onChange={handleChange}
-                            className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400"
-                          />
-      
+
+                        {/* Missing Keywords */}
+                        <div className="md:col-span-3 bg-slate-900/60 backdrop-blur-md border border-slate-800 p-6 rounded-2xl shadow-md">
+                            <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                                Missing Keywords
+                            </h2>
+                            <div className="flex flex-wrap gap-2 max-h-[100px] overflow-y-auto pr-2">
+                                {missingKeywords.length > 0 ? (
+                                    missingKeywords.map((keyword, index) => (
+                                        <span
+                                            key={index}
+                                            className="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-3 py-1 rounded-lg text-xs font-medium"
+                                        >
+                                            {keyword}
+                                        </span>
+                                    ))
+                                ) : (
+                                    <span className="text-emerald-400 text-sm font-medium flex items-center gap-1">
+                                        ✓ All ATS keywords found
+                                    </span>
+                                )}
+                            </div>
                         </div>
-      
-                      </div>
-      
-                      {/* Experience */}
-      
-                      <div className="bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
-      
-                        <h3 className="text-2xl font-semibold mb-7 text-slate-800">
-                          Experience
-                        </h3>
-      
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-      
-                          <input
-                            type="text"
-                            name="company"
-                            placeholder="Company Name"
-                            value={formData.company}
-                            onChange={handleChange}
-                            className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400"
-                          />
-      
-                          <input
-                            type="text"
-                            name="role"
-                            placeholder="Role / Position"
-                            value={formData.role}
-                            onChange={handleChange}
-                            className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400"
-                          />
-      
-                        </div>
-      
-                        <input
-                          type="text"
-                          name="duration"
-                          placeholder="Duration (Ex: Jan 2024 - Present)"
-                          value={formData.duration}
-                          onChange={handleChange}
-                          className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400 w-full mt-5"
-                        />
-      
-                        <textarea
-                          name="experienceDescription"
-                          placeholder="Describe your work experience..."
-                          value={formData.experienceDescription}
-                          onChange={handleChange}
-                          className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400 w-full mt-5 h-36 resize-none"
-                        />
-      
-                      </div>
-      
-                      {/* Skills */}
-      
-                      <div className="bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300">
-      
-                        <h3 className="text-2xl font-semibold mb-7 text-slate-800">
-                          Skills
-                        </h3>
-      
-                        <textarea
-                          name="skills"
-                          placeholder="Enter your skills (React, Node.js, MongoDB, Python...)"
-                          value={formData.skills}
-                          onChange={handleChange}
-                          className="border border-slate-300 bg-white p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-200 focus:shadow-lg focus:border-blue-500 transition-all duration-300 hover:border-blue-400 w-full h-36 resize-none"
-                        />
-      
-                      </div>
-      
-                      {/* Success Message */}
-      
-                      {successMessage && (
-                        <div className="bg-green-100 border border-green-400 text-green-700 px-5 py-4 rounded-2xl shadow-sm">
-                          {successMessage}
-                        </div>
-                      )}
-      
-                      {/* Error Message */}
-      
-                      {errorMessage && (
-                        <div className="bg-red-100 border border-red-400 text-red-700 px-5 py-4 rounded-2xl shadow-sm">
-                          {errorMessage}
-                        </div>
-                      )}
-      
-                      <div className="bg-slate-50 border border-slate-200 rounded-3xl p-5 sm:p-7 shadow-sm">
-                        <h3 className="text-2xl font-semibold mb-5 text-slate-800">
-                           Resume Template
-                        </h3>
-      
-                        <select
-                          name="template"
-                          value={formData.template}
-                          onChange={handleChange}
-                          className="border border-slate-300 bg-white p-4 rounded-2xl w-full"
-                        >
-                          <option value="modern">Modern</option>
-                          <option value="classic">Classic</option>
-                          <option value="professional">Professional</option>
-                        </select>
-                      </div>
-      
-                      {/* Submit Button */}
-      
-                      <div className="flex flex-col sm:flex-row gap-4">
-      
-                        <button
-                          type="button"
-                          onClick={handleImproveResume}
-                          disabled={aiLoading}
-                          className={`flex-1 text-white font-semibold py-5 rounded-2xl shadow-xl transition-all duration-300 text-lg ${
-                            aiLoading
-                              ? "bg-purple-400 cursor-not-allowed"
-                              : "bg-gradient-to-r from-purple-600 via-fuchsia-600 to-indigo-600 hover:scale-[1.02]"
-                          }`}
-                        >
-                          {aiLoading ? "Improving Resume..." : "✨ Improve Resume"}
-                        </button>
-      
-                        <button
-                          type="button"
-                          onClick={handleDownloadPDF}
-                          className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-xl shadow-lg transition-all"
-                        >
-                          📄 Download Resume PDF
-                          
-                        </button>
-      
-                        <button
-                          type="submit"
-                          disabled={loading}
-                          className={`flex-1 text-white font-semibold py-5 rounded-2xl shadow-xl transition-all duration-300 text-lg ${
-                            loading
-                              ? "bg-gray-400 cursor-not-allowed"
-                              : "bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:scale-[1.02]"
-                          }`}
-                        >
-                          {loading
-                            ? "Processing..."
-                            : isEditing
-                            ? "Update Resume"
-                            : "Save Resume"}
-                        </button>
-      
-                      </div>
-      
-                      {aiLoading && (
-                        <div className="mt-4 flex items-center gap-3 px-4 py-2 bg-purple-50 border border-purple-200 rounded-2xl">
-                          <div className="h-5 w-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
-      
-                          <p className="text-purple-700 font-medium text-sm">
-                            {loadingMessage}
-                          </p>
-                        </div>
-                      )}
-      
-                      {aiSuggestions && (
-                        <div className="mt-6 bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-3xl p-6 shadow-lg">
-                          <h3 className="text-2xl font-bold text-indigo-700 mb-4">
-                            🤖 AI Resume Suggestions
-                          </h3>
-      
-                          <div className="whitespace-pre-wrap text-slate-700 leading-relaxed">
-                            {aiSuggestions}
-                          </div>
-                        </div>
-                      )}
-                    </form>
-      
-                  </div>
-                  <div className="xl:col-span-2 bg-slate-100 p-6">
-      
-                    <div className="bg-white p-5 rounded-xl shadow mb-4">
-      
-                      <h2 className="text-xl font-bold mb-3">
-                        ATS Score
-                      </h2>
-      
-                      <div className="text-4xl font-bold text-green-600">
-                        {atsScore}%
-                      </div>
-      
-                      <p className="text-sm text-slate-500 mt-2">
-                        Resume ATS Compatibility Score
-                      </p>
-      
-                  </div>
-      
-                  <div className="bg-white p-5 rounded-xl shadow mb-4">
-      
-                    <h3 className="font-bold mb-3">
-                    Missing Keywords
-                    </h3>
-      
-                    <div className="flex flex-wrap gap-2">
-      
-                      {missingKeywords.length > 0 ? (
-      
-                        missingKeywords.map((keyword, index) => (
-                          <span
-                            key={index}
-                            className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm"
-                          >
-                            {keyword}
-                          </span>
-                        ))
-      
-                      ) : (
-      
-                        <span className="text-green-600">
-                          All ATS keywords found
-                        </span>
-      
-                      )}
-      
+
                     </div>
-      
-                  </div>
-      
-                  <ResumePreview formData={formData} />
-                  </div>
-      
+
+                    {/* Main Workspace: Builder & Preview */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+                        {/* LEFT FORM SECTION */}
+                        <div className="lg:col-span-7 bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+                            <div className="mb-8">
+                                <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+                                    Resume Builder
+                                </h2>
+                                <p className="text-slate-500 text-sm mt-1">
+                                    Fill in your professional details to generate an ATS-ready resume.
+                                </p>
+                            </div>
+
+                            <form onSubmit={handleSubmit} className="space-y-6">
+            
+                                {/* Personal Information */}
+                                <div className="bg-slate-50 border border-slate-200/60 rounded-xl p-5 shadow-sm space-y-4">
+                                    <h3 className="text-lg font-bold text-slate-800 border-b border-slate-200 pb-2">
+                                        Personal Information
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            placeholder="Full Name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                            required
+                                        />
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            placeholder="Email Address"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                            required
+                                        />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="phone"
+                                        placeholder="Phone Number"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                        required
+                                    />
+                                </div>
+
+                                {/* Education */}
+                                <div className="bg-slate-50 border border-slate-200/60 rounded-xl p-5 shadow-sm space-y-4">
+                                    <h3 className="text-lg font-bold text-slate-800 border-b border-slate-200 pb-2">
+                                        Education
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <input
+                                            type="text"
+                                            name="college"
+                                            placeholder="College / University"
+                                            value={formData.college}
+                                            onChange={handleChange}
+                                            className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                        />
+                                        <input
+                                            type="text"
+                                            name="degree"
+                                            placeholder="Degree"
+                                            value={formData.degree}
+                                            onChange={handleChange}
+                                            className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                        />
+                                        <input
+                                            type="text"
+                                            name="cgpa"
+                                            placeholder="CGPA"
+                                            value={formData.cgpa}
+                                            onChange={handleChange}
+                                            className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                        />
+                                        <input
+                                            type="text"
+                                            name="graduationYear"
+                                            placeholder="Graduation Year"
+                                            value={formData.graduationYear}
+                                            onChange={handleChange}
+                                            className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Experience */}
+                                <div className="bg-slate-50 border border-slate-200/60 rounded-xl p-5 shadow-sm space-y-4">
+                                    <h3 className="text-lg font-bold text-slate-800 border-b border-slate-200 pb-2">
+                                        Experience
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <input
+                                            type="text"
+                                            name="company"
+                                            placeholder="Company Name"
+                                            value={formData.company}
+                                            onChange={handleChange}
+                                            className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                        />
+                                        <input
+                                            type="text"
+                                            name="role"
+                                            placeholder="Role / Position"
+                                            value={formData.role}
+                                            onChange={handleChange}
+                                            className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                        />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        name="duration"
+                                        placeholder="Duration (Ex: Jan 2024 - Present)"
+                                        value={formData.duration}
+                                        onChange={handleChange}
+                                        className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full"
+                                    />
+                                    <textarea
+                                        name="experienceDescription"
+                                        placeholder="Describe your work experience..."
+                                        value={formData.experienceDescription}
+                                        onChange={handleChange}
+                                        className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full h-32 resize-none"
+                                    />
+                                </div>
+
+                                {/* Skills */}
+                                <div className="bg-slate-50 border border-slate-200/60 rounded-xl p-5 shadow-sm space-y-3">
+                                    <h3 className="text-lg font-bold text-slate-800 border-b border-slate-200 pb-2">
+                                        Skills
+                                    </h3>
+                                    <textarea
+                                        name="skills"
+                                        placeholder="Enter your skills (React, Node.js, MongoDB, Python...)"
+                                        value={formData.skills}
+                                        onChange={handleChange}
+                                        className="border border-slate-300 bg-white p-3 rounded-lg outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-slate-800 text-sm transition-all w-full h-28 resize-none"
+                                    />
+                                </div>
+
+                                {/* Template Selection */}
+                                <div className="bg-slate-50 border border-slate-200/60 rounded-xl p-5 shadow-sm space-y-3">
+                                    <h3 className="text-lg font-bold text-slate-800 pb-1">
+                                        Resume Template
+                                    </h3>
+                                    <select
+                                        name="template"
+                                        value={formData.template}
+                                        onChange={handleChange}
+                                        className="border border-slate-300 bg-white p-3 rounded-lg w-full text-slate-800 text-sm focus:ring-2 focus:ring-blue-500/20 outline-none"
+                                    >
+                                        <option value="modern">Modern</option>
+                                        <option value="classic">Classic</option>
+                                        <option value="professional">Professional</option>
+                                    </select>
+                                </div>
+
+                                {/* System Feedback Messages */}
+                                {successMessage && (
+                                    <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl text-sm font-medium">
+                                        {successMessage}
+                                    </div>
+                                )}
+                                {errorMessage && (
+                                    <div className="bg-rose-50 border border-rose-200 text-rose-800 px-4 py-3 rounded-xl text-sm font-medium">
+                                        {errorMessage}
+                                    </div>
+                                )}
+
+                                {/* AI Processing Status */}
+                                {aiLoading && (
+                                    <div className="flex items-center gap-3 px-4 py-3 bg-purple-50 border border-purple-200 rounded-xl">
+                                        <div className="h-4 w-4 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
+                                        <p className="text-purple-800 font-medium text-sm">
+                                            {loadingMessage}
+                                        </p>
+                                    </div>
+                                )}
+
+                                {/* Action Buttons Row */}
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                                    <button
+                                        type="button"
+                                        onClick={handleImproveResume}
+                                        disabled={aiLoading}
+                                        className={`w-full text-white font-semibold py-3.5 px-4 rounded-xl shadow-md text-sm transition-all ${
+                                            aiLoading
+                                                ? "bg-purple-400 cursor-not-allowed"
+                                                : "bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-95 active:scale-[0.99]"
+                                        }`}
+                                    >
+                                        {aiLoading ? "Improving..." : "✨ AI Improve"}
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={handleDownloadPDF}
+                                        className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 px-4 rounded-xl shadow-md text-sm transition-all active:scale-[0.99]"
+                                    >
+                                        📄 Download PDF
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        disabled={loading}
+                                        className={`w-full text-white font-semibold py-3.5 px-4 rounded-xl shadow-md text-sm transition-all ${
+                                            loading
+                                                ? "bg-slate-400 cursor-not-allowed"
+                                                : "bg-slate-900 hover:bg-slate-800 active:scale-[0.99]"
+                                        }`}
+                                    >
+                                        {loading ? "Processing..." : isEditing ? "Update Resume" : "Save Resume"}
+                                    </button>
+                                </div>
+
+                                {/* AI Optimization Suggestions box */}
+                                {aiSuggestions && (
+                                    <div className="bg-gradient-to-br from-slate-50 to-indigo-50/50 border border-indigo-100 rounded-xl p-5 shadow-inner">
+                                        <h3 className="text-md font-bold text-indigo-900 mb-2 flex items-center gap-1">
+                                            🤖 AI Suggestions
+                                        </h3>
+                                        <div className="whitespace-pre-wrap text-slate-600 text-xs leading-relaxed max-h-48 overflow-y-auto pr-1">
+                                            {aiSuggestions}
+                                        </div>
+                                    </div>
+                                )}
+
+                            </form>
+                        </div>
+
+                        {/* RIGHT PREVIEW SECTION */}
+                        <div className="lg:col-span-5 bg-slate-900/40 border border-slate-800 p-4 sm:p-6 rounded-2xl sticky top-6 shadow-xl backdrop-blur-sm">
+                            <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">
+                                Live Preview
+                            </h2>
+                            <div className="max-h-[calc(100vh-280px)] overflow-y-auto rounded-xl shadow-inner bg-slate-950/40 p-2 border border-slate-800/50">
+                                <ResumePreview formData={formData} />
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
-      
-              </div>
-      
             </div>
-      
-          </div>
-      
         );
       
       }
