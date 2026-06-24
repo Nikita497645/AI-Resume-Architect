@@ -10,6 +10,7 @@ console.log("SERVER KEY FOUND:", !!process.env.GROQ_API_KEY);
 const connectDB = require("./config/db");
 const Resume = require("./models/Resume");
 const aiRoutes = require("./routes/aiRoutes");
+const pdfRoutes = require("./routes/pdfRoutes");
 
 connectDB();
 
@@ -19,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/ai", aiRoutes);
+app.use("/api/pdf", pdfRoutes);
 
 /* Root Route */
 
