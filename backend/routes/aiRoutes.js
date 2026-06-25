@@ -17,48 +17,27 @@ router.post("/improve", async (req, res) => {
     const { formData } = req.body;
 
     const prompt = `
-You are a professional ATS Resume Expert and Career Coach.
-
-Analyze the following resume details and provide detailed suggestions.
+You are an expert ATS Resume Reviewer.
 
 Candidate Information:
 
 Name: ${formData.name}
+Degree: ${formData.degree}
+College: ${formData.college}
+Role: ${formData.role}
+Company: ${formData.company}
+Skills: ${formData.skills}
+Experience: ${formData.experienceDescription}
 
-Education:
-- Degree: ${formData.degree}
-- College: ${formData.college}
-- CGPA: ${formData.cgpa}
-- Graduation Year: ${formData.graduationYear}
+Provide:
 
-Experience:
-- Company: ${formData.company}
-- Role: ${formData.role}
-- Duration: ${formData.duration}
-- Description: ${formData.experienceDescription}
+1. Professional Summary
+2. ATS Score out of 100
+3. Missing Keywords
+4. Resume Improvements
+5. Final Recommendations
 
-Skills:
-${formData.skills}
-
-Please provide:
-
-1. Professional Summary (2-3 lines)
-
-2. ATS Resume Score (out of 100)
-
-3. Missing Keywords for ATS
-
-4. Skill Improvement Suggestions
-
-5. Experience Improvement Suggestions
-
-6. Resume Strengths
-
-7. Resume Weaknesses
-
-8. Final ATS Optimization Recommendations
-
-Format the response clearly using headings and bullet points.
+Keep response concise and professional.
 `;
 
     const completion = await groq.chat.completions.create({
@@ -68,7 +47,7 @@ Format the response clearly using headings and bullet points.
           content: prompt,
         },
       ],
-      model: "llama-3.3-70b-versatile",
+      model: "llama-3.1-8b-instant",
     });
 
     res.status(200).json({
