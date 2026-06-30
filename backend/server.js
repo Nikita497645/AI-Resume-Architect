@@ -11,6 +11,7 @@ const connectDB = require("./config/db");
 const Resume = require("./models/Resume");
 const aiRoutes = require("./routes/aiRoutes");
 const pdfRoutes = require("./routes/pdfRoutes");
+const compression = require("compression");
 
 connectDB();
 
@@ -18,6 +19,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(compression());
 
 app.use("/api/ai", aiRoutes);
 app.use("/api/pdf", pdfRoutes);
